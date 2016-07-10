@@ -1,0 +1,6 @@
+G:\EPAM\Task_5_Collections\Demin_Anton_Task5\Demin_Anton_Task5\bin\Debug\Demin_Anton_Task5.exe.config
+G:\EPAM\Task_5_Collections\Demin_Anton_Task5\Demin_Anton_Task5\bin\Debug\Demin_Anton_Task5.exe
+G:\EPAM\Task_5_Collections\Demin_Anton_Task5\Demin_Anton_Task5\bin\Debug\Demin_Anton_Task5.pdb
+G:\EPAM\Task_5_Collections\Demin_Anton_Task5\Demin_Anton_Task5\obj\Debug\Task1.csprojResolveAssemblyReference.cache
+G:\EPAM\Task_5_Collections\Demin_Anton_Task5\Demin_Anton_Task5\obj\Debug\Demin_Anton_Task5.exe
+G:\EPAM\Task_5_Collections\Demin_Anton_Task5\Demin_Anton_Task5\obj\Debug\Demin_Anton_Task5.pdb

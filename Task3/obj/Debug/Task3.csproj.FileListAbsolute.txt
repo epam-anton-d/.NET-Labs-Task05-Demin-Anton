@@ -1,0 +1,6 @@
+C:\EPAM\Task_5_Collections\Demin_Anton_Task5\Task3\bin\Debug\Task3.exe.config
+C:\EPAM\Task_5_Collections\Demin_Anton_Task5\Task3\bin\Debug\Task3.exe
+C:\EPAM\Task_5_Collections\Demin_Anton_Task5\Task3\bin\Debug\Task3.pdb
+C:\EPAM\Task_5_Collections\Demin_Anton_Task5\Task3\obj\Debug\Task3.csprojResolveAssemblyReference.cache
+C:\EPAM\Task_5_Collections\Demin_Anton_Task5\Task3\obj\Debug\Task3.exe
+C:\EPAM\Task_5_Collections\Demin_Anton_Task5\Task3\obj\Debug\Task3.pdb

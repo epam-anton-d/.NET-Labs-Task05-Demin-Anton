@@ -35,7 +35,6 @@ namespace Task3
             this.Length = 8;
 
             this.firstName = new string[Length];
-            //this.secondName = new string[Length];
 
             firstName[0] = "Эрос Ромазотти";
             firstName[1] = "Петр Чайковский";
@@ -59,14 +58,14 @@ namespace Task3
         }
 
 
+
+
     }
 
     class DynamicArray : ConfigurationSection, IEnumerable
     {
         public int[] MyArray;
         public string[] peopleArray;
-
-        //private int length;
 
         // Конструктор (Задание 3.2. Создание массива заданной емкости, по-умолчанию 8).
         public DynamicArray(int Capacity = DefaultCapacity)
@@ -85,15 +84,18 @@ namespace Task3
             }
         }
 
+        // Задание 3.4. Добавить один элемент в конец массива.
         public void Add(string addElement)
         {
             for (int i = 0; i < peopleArray.Length; i++)
             {
+                // Если места достаточно не расширяем массив.
                 if (peopleArray[i] == null || peopleArray[i] == "")
                 {
                     peopleArray[i] = addElement;
                     break;
-                } 
+                }
+                // Если места не достаточно - расширяем;
                 if (i == peopleArray.Length - 1)
                 {
                     Array.Resize(ref peopleArray, peopleArray.Length * 2);
@@ -103,13 +105,14 @@ namespace Task3
             }
         }
 
-        // 5.
+        // Задание 3.5. Добавление в конец массива содержимое коллекции.
         public void AddRange(PeopleContainer People)
         {
             for (int i = 0; i < peopleArray.Length; i++)
             {
                 if (peopleArray[i] == null || peopleArray[i] == "")
                 {
+                    // Если достаточно места вставляем коллекцию в массив.
                     if (People.firstName.Length > peopleArray.Length - i - 1)
 	                {
                         Array.Resize(ref peopleArray, peopleArray.Length + People.firstName.Length);
@@ -119,36 +122,34 @@ namespace Task3
                         peopleArray[i + j] = People.firstName[j];
                     }
                     break;
-                    //peopleArray[i] = addElement;
-                    //break;
                 }
                 if (i == peopleArray.Length - 1)
                 {
+                    // Если не достаточно - увеличиваем размер.
                     Array.Resize(ref peopleArray, peopleArray.Length + People.firstName.Length);
                     for (int j = 0; j < People.firstName.Length; j++)
                     {
                         peopleArray[i + 1 + j] = People.firstName[j];
                     }
                     break;
-                    //peopleArray[i + 1] = addElement;
-                    //break;
                 }
             }
         }
 
-        // 6.
+        // Задание 3.6. Удаление из коллекции указанного элемента.
         public void Remove(int index)
         {
             for (int i = index; i < peopleArray.Length - 1; i++)
             {
                 if (peopleArray[i + 1] != null || peopleArray[i + 1] != "")
                 {
+                    // Сдвигаем элементы, чтобыне было пустот.
                     peopleArray[i] = peopleArray[i + 1];
                 }
             }
         }
 
-        // 7.
+        // Задание 3.7. Добавляем элемент в произвольную позицию.
         public bool Insert(string insElt, int index)
         {
             for (int i = peopleArray.Length - 1; i >= index; i--)
@@ -157,6 +158,7 @@ namespace Task3
                 {
                     try
                     {
+                        // Освобождаем место под элемент.
                         peopleArray[i + 1] = peopleArray[i];
                     }
                     catch (System.IndexOutOfRangeException e)  
@@ -171,7 +173,7 @@ namespace Task3
             return true;
         }
 
-        // 8.
+        // Задание 3.8. Получение длинны массива.
         public int Length
         {
             get
@@ -188,7 +190,7 @@ namespace Task3
             }
         }
 
-        // 9.
+        // Задание 3.9. Получение реальной длины массива.
         public int Capacity
         {
             get
@@ -206,38 +208,116 @@ namespace Task3
         {
             throw new NotImplementedException();
         }
+
+        // Задание 3.10. Реализация методов интерфейсов.
+        private int position = 0;
+
+        // Перемещение "указателя" на следущий элемент
+        public bool MoveNext()
+        {
+            if (position < peopleArray.Length)
+            {
+                position++;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // Сброс указателя на нулевой элемент.
+        public void Reset()
+        {
+            position = 0;
+        }
+
+        // Возврашение текущего элемента.
+        public object Current
+        {
+            get
+            {
+                return peopleArray[position];
+            }
+        }
+
+        // Задание 3.11. Индексатор.
+        public string this[int index]
+        {
+            get
+            {
+                try
+                {
+                    // Обращение к объекту как к массиву.
+                    return peopleArray[index];
+                }
+                catch (System.IndexOutOfRangeException e)
+                {
+                    System.Console.WriteLine(e.Message);
+                    throw new System.ArgumentOutOfRangeException("Вышли за пределы допустимых значений.", e);
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    peopleArray[index] = value;
+                }
+                catch (System.IndexOutOfRangeException e)
+                {
+                    System.Console.WriteLine(e.Message);
+                    throw new System.ArgumentOutOfRangeException("Вышли за пределы допустимых значений.", e);
+                }
+            }
+        }
     }
 
     class Program
     {
         static void Main(string[] args)
         {
-            // 1, 2.
+            // Задание 3.1, 3.2.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.1, 3.2.");
+            Console.ForegroundColor = ConsoleColor.Gray;
             DynamicArray Myo = new DynamicArray();
-            Console.WriteLine(Myo.MyArray.Length);
+            Console.WriteLine("Длина массива, с заданной длинной по умолчанию = {0}",Myo.MyArray.Length);
 
-            // 3.
+            // Задание 3.3.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.3.");         
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("Выводим передаваемую коллекцию:");
             PeopleContainer musicians = new PeopleContainer();
             for (int i = 0; i < 8; i ++)
             {
                 Console.WriteLine(musicians.firstName[i]);
             }
             DynamicArray dynamicArray = new DynamicArray(musicians);
-
+            Console.WriteLine("\nВыводим полученную коллекцию:");
             for (int i = 0; i < dynamicArray.peopleArray.Length; i++)
             {
                 Console.WriteLine(dynamicArray.peopleArray[i]);
             }
             
-            // 4.
+            // Задание 3.4.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.4.");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            // Добавляем эллемент в коллекцию.
+            Console.WriteLine("Добавили эллемент:");
             dynamicArray.Add("Александр Васильев");
             Console.WriteLine(dynamicArray.peopleArray[8]);
-            Console.WriteLine(dynamicArray.peopleArray.Length);
+            Console.WriteLine("Вместимость коллекции после добавления: {0}", dynamicArray.peopleArray.Length);
 
-            // 5.
+            // Задание 3.5.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.5.");
+            Console.ForegroundColor = ConsoleColor.Gray;
             dynamicArray.AddRange(musicians);
             Console.WriteLine();
-            Console.WriteLine("5:");
+            Console.WriteLine("Полученная коллекция:");
             for (int i = 0; i < dynamicArray.peopleArray.Length; i++)
             {
                 if (dynamicArray.peopleArray[i] != null && dynamicArray.peopleArray[i] != "")
@@ -246,10 +326,14 @@ namespace Task3
                 }
             }
 
-            // 6.
+            // Задание 3.6.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.6.");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("Удаляем элемент синдексом 8.");
             dynamicArray.Remove(8);
             Console.WriteLine();
-            Console.WriteLine("6:");
+            Console.WriteLine("Результат:");
             for (int i = 0; i < dynamicArray.peopleArray.Length; i++)
             {
                 if (dynamicArray.peopleArray[i] != null && dynamicArray.peopleArray[i] != "")
@@ -258,10 +342,12 @@ namespace Task3
                 }
             }
 
-            // 7. 
+            // Задание 3.7.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.7.");
+            Console.ForegroundColor = ConsoleColor.Gray;
             dynamicArray.Insert("Виктор Цой", 4);
-            Console.WriteLine();
-            Console.WriteLine("7:");
+            Console.WriteLine("Вставили в массив элемент. Результат:");
             for (int i = 0; i < dynamicArray.peopleArray.Length; i++)
             {
                 if (dynamicArray.peopleArray[i] != null && dynamicArray.peopleArray[i] != "")
@@ -270,11 +356,34 @@ namespace Task3
                 }
             }
 
-            // 8. 
+            // Задание 3.8.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.8.");
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("Длинна массива равна = {0}", dynamicArray.Length);
 
-            // 9.
+            // Задание 3.9.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.9.");
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("Реальная длинна массива равна = {0}", dynamicArray.Capacity);
+
+            // Задание 3.10.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.10.");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            // Получаем третий элемент колекции.
+            dynamicArray.Reset();
+            dynamicArray.MoveNext();
+            dynamicArray.MoveNext();
+            Console.WriteLine("Текущий элемент: {0}", dynamicArray.Current);
+            dynamicArray.Reset();
+
+            // Задание 3.11.
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Задание 3.11.");
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("Пятый элемент коллекции (осуществляем достут с применением индексатора): {0}", dynamicArray[5]);
 
             Console.ReadKey();
         }
